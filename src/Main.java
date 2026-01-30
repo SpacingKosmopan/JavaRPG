@@ -1,13 +1,15 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+import Classes.ConsoleFormatter;
+import Classes.Labels;
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
-    }
+//   C:\Users\Komputer\IdeaProjects\JavaRPG
+
+import static Classes.ConsoleFormatter.*;
+void main() {
+    String formatted1 = ConsoleFormatter.create().red().text("This is red").reset().text(" | and this is not").toString();
+    System.out.println(formatted1);
+    String formatted2 = RED + "This is red" + RESET + " | and this is not" + RESET;
+    System.out.println(formatted2);
+
+    Labels labelsCreator = new Labels();
+    System.out.println(labelsCreator.getLabel("center", 0, 5, '+', '-', '|', "START", "Settings", "Credits", "Quit"));
 }
