@@ -80,7 +80,7 @@ public class Labels {
 
         String output = "";
 
-        output += corner + ConsoleFormatter.getChars(horizontalSide, maxWidth + (align.equals("center") ? 2 * padding : 0)) + corner + "\n";
+        output += corner + ConsoleFormatter.getChars(horizontalSide, maxWidth + (align.equals("center") ? 2 * padding : maxWidth-padding)) + corner + "\n";
 
         for (int i = 0; i < (int) Math.floor(extraHeight - 1) / 2; i++) {
             output += verticalSide + ConsoleFormatter.getSpace(maxWidth) + verticalSide + "\n";
@@ -106,7 +106,7 @@ public class Labels {
             output += verticalSide + ConsoleFormatter.getSpace(maxWidth) + verticalSide + "\n";
         }
 
-        output += corner + ConsoleFormatter.getChars(horizontalSide, maxWidth + (align.equals("center") ? 2 * padding : 0)) + corner;
+        output += corner + ConsoleFormatter.getChars(horizontalSide, maxWidth + (align.equals("center") ? 2 * padding : padding)) + corner;
 
         return output;
     }
