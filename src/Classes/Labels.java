@@ -23,50 +23,51 @@ public class Labels {
         return printLabel(text, align, fixedWidth, fixedHeight, 1, '+', '-', '|');
     }
 
-    public String getLabel(String text, Align align, int fixedWidth, int fixedHeight, int padding, char corner, char horizontalSide, char verticalSide) {
+    public String getLabel(String text, Align align, int minWidth, int fixedHeight, int padding, char corner, char horizontalSide, char verticalSide) {
         StringBuilder sb = new StringBuilder();
 
-        if ((!text.isEmpty() && (fixedWidth < text.length() + padding || fixedHeight <= 0))
-                || (text.isEmpty() && (fixedWidth < 0 || fixedHeight < 0))) {
+        if ((!text.isEmpty() && fixedHeight <= 0)
+                || (text.isEmpty() && fixedHeight < 0))
             return "";
-        }
-        if (corner == ' ' || verticalSide == ' ' || horizontalSide == ' ') return "";
+
+        int stringLength = text.length();
 
         sb.append(corner);
-        sb.append(ConsoleFormatter.getChars(horizontalSide, fixedWidth));
+        int borderLength = Math.max(minWidth, stringLength + (align.equals(Align.CENTER) ? 2 * padding : padding));
+        sb.append(ConsoleFormatter.getChars(horizontalSide, borderLength));
         sb.append(corner);
         sb.append("\n");
         for (int i = 0; i < (int) Math.floor((double) (fixedHeight - 1) / 2); i++) {
             sb.append(verticalSide);
-            sb.append(ConsoleFormatter.getSpace(fixedWidth));
+            sb.append(ConsoleFormatter.getSpace(minWidth));
             sb.append(verticalSide);
             sb.append("\n");
         }
 
         sb.append(verticalSide);
-        sb.append(ConsoleFormatter.getSpace(align.equals(Align.LEFT)
+        sb.append(ConsoleFormatter.getSpace(align.equals(Align.RIGHT)
                 ? padding
-                : align.equals(Align.RIGHT)
-                ? fixedWidth - text.length() - padding
-                : (int) Math.floor((fixedWidth - text.length()) / 2.0) + padding));
+                : align.equals(Align.LEFT)
+                ? minWidth - text.length() - padding
+                : (int) Math.floor((minWidth - text.length()) / 2.0) + padding));
         sb.append(text);
-        sb.append(ConsoleFormatter.getSpace(align.equals(Align.LEFT)
-                ? fixedWidth - text.length() - padding
-                : align.equals(Align.RIGHT)
+        sb.append(ConsoleFormatter.getSpace(align.equals(Align.RIGHT)
+                ? minWidth - text.length() - padding
+                : align.equals(Align.LEFT)
                 ? padding
-                : (int) Math.ceil((fixedWidth - text.length()) / 2.0) + padding));
+                : (int) Math.ceil((minWidth - text.length()) / 2.0) + padding));
         sb.append(verticalSide);
         sb.append("\n");
 
         for (int i = 0; i < (int) Math.ceil((double) (fixedHeight) / 2); i++) {
             sb.append(verticalSide);
-            sb.append(ConsoleFormatter.getSpace(fixedWidth));
+            sb.append(ConsoleFormatter.getSpace(minWidth));
             sb.append(verticalSide);
             sb.append("\n");
         }
 
         sb.append(corner);
-        sb.append(ConsoleFormatter.getChars(horizontalSide, fixedWidth));
+        sb.append(ConsoleFormatter.getChars(horizontalSide, borderLength));
         sb.append(corner);
 
         return sb.toString();
@@ -82,24 +83,24 @@ public class Labels {
         return max;
     }
 
-    public String getLabel(Align align, int extraHeight, int padding, char corner, char horizontalSide, char verticalSide, String... multitext) {
+    public String getLabel(Align align, int extraHeight, int leftPadding, int rightPadding, char corner, char horizontalSide, char verticalSide, String... multitext) {
         StringBuilder sb = new StringBuilder();
-        extraHeight++;
-        int maxWidth = getLongestString(multitext);
-        if (maxWidth < 0 || extraHeight < 0)
+        int longestStringLength = getLongestString(multitext);
+        if (longestStringLength < 0 || extraHeight < 0)
             return "";
-
-        if (corner == ' ' || verticalSide == ' ' || horizontalSide == ' ') return "";
 
         // top +-+
         sb.append(corner);
-        sb.append(ConsoleFormatter.getChars(horizontalSide, maxWidth + (align.equals(Align.CENTER) ? 2 * padding : maxWidth - padding)));
+        // if align to left, then 1 padding on the left and padding on the right
+        // if align to center, then 2*padding
+        int borderLength = longestStringLength + leftPadding + rightPadding;
+        sb.append(ConsoleFormatter.getChars(horizontalSide, borderLength));
         sb.append(corner);
         sb.append("\n");
 
         for (int i = 0; i < (int) Math.floor((double) (extraHeight - 1) / 2); i++) {
             sb.append(verticalSide);
-            sb.append(ConsoleFormatter.getSpace(maxWidth));
+            sb.append(ConsoleFormatter.getSpace(borderLength));
             sb.append(verticalSide);
             sb.append("\n");
         }
@@ -108,34 +109,34 @@ public class Labels {
             // left | and space
             sb.append(verticalSide);
             sb.append(ConsoleFormatter.getSpace(align.equals(Align.LEFT)
-                    ? padding
+                    ? leftPadding
                     : align.equals(Align.RIGHT)
-                    ? maxWidth - line.length() - padding
-                    : (int) Math.floor((maxWidth - line.length()) / 2.0) + padding));
+                    ?longestStringLength - line.length() + leftPadding
+                    : (int) Math.floor((double) (longestStringLength - line.length()) / 2) + leftPadding));
 
             // text
             sb.append(line);
 
             // right space and |
-            sb.append(ConsoleFormatter.getSpace(align.equals(Align.LEFT)
-                    ? maxWidth - line.length() + padding
-                    : align.equals(Align.RIGHT)
-                    ? padding
-                    : (int) Math.ceil((maxWidth - line.length()) / 2.0) + padding));
+            sb.append(ConsoleFormatter.getSpace(align.equals(Align.RIGHT)
+                    ? rightPadding
+                    : align.equals(Align.LEFT)
+                    ?longestStringLength - line.length() + rightPadding
+                    : (int) Math.ceil((double) (longestStringLength - line.length()) / 2) + rightPadding));
             sb.append(verticalSide);
             sb.append("\n");
         }
 
         for (int i = 0; i < (int) Math.ceil((double) extraHeight / 2); i++) {
             sb.append(verticalSide);
-            sb.append(ConsoleFormatter.getSpace(maxWidth));
+            sb.append(ConsoleFormatter.getSpace(borderLength));
             sb.append(verticalSide);
             sb.append("\n");
         }
 
         // bottom +-+
         sb.append(corner);
-        sb.append(ConsoleFormatter.getChars(horizontalSide, maxWidth + (align.equals(Align.CENTER) ? 2 * padding : padding)));
+        sb.append(ConsoleFormatter.getChars(horizontalSide, borderLength));
         sb.append(corner);
 
         return sb.toString();
