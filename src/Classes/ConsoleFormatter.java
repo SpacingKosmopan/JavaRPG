@@ -1,5 +1,7 @@
 package Classes;
 
+import java.util.Map;
+
 public class ConsoleFormatter {
     public static final String RESET = "\u001B[0m";
     public static final String RED = "\u001B[31m";
@@ -16,6 +18,29 @@ public class ConsoleFormatter {
         for (int i = 0; i < 50; i++) {
             System.out.println();
         }
+    }
+
+    public static final Map<Character, String> TOKENS=Map.of(
+            '/', "/",
+            'r', RED,
+            'g', GREEN,
+            'b', BLUE,
+            'y', YELLOW,
+            'f', RED_BCKG,
+            'n', BLACK_BCKG,
+            '0', RESET
+    );
+
+    public static String deregex(String textToFormat) {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < textToFormat.length(); i++) {
+            char ch = textToFormat.charAt(i);
+            if (ch == '/' && i + 1 < textToFormat.length()) {
+                ch = textToFormat.charAt(++i);
+                output.append(TOKENS.getOrDefault(ch, ""));
+            } else output.append(ch);
+        }
+        return output.toString();
     }
 
     String text;
