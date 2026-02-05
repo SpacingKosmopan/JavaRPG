@@ -83,7 +83,7 @@ public class Labels {
         return max;
     }
 
-    public String getLabel(Align align, int extraHeight, int leftPadding, int rightPadding, char corner, char horizontalSide, char verticalSide, String... multitext) {
+    public String getLabel(Align align, int minWidth, int extraHeight, int leftPadding, int rightPadding, char corner, char horizontalSide, char verticalSide, String... multitext) {
         StringBuilder sb = new StringBuilder();
         int longestStringLength = getLongestString(multitext);
         if (longestStringLength < 0 || extraHeight < 0)
@@ -93,7 +93,7 @@ public class Labels {
         sb.append(corner);
         // if align to left, then 1 padding on the left and padding on the right
         // if align to center, then 2*padding
-        int borderLength = longestStringLength + leftPadding + rightPadding;
+        int borderLength = Math.max(minWidth, longestStringLength + leftPadding + rightPadding);
         sb.append(ConsoleFormatter.getChars(horizontalSide, borderLength));
         sb.append(corner);
         sb.append("\n");
@@ -111,7 +111,7 @@ public class Labels {
             sb.append(ConsoleFormatter.getSpace(align.equals(Align.LEFT)
                     ? leftPadding
                     : align.equals(Align.RIGHT)
-                    ?longestStringLength - line.length() + leftPadding
+                    ? longestStringLength - line.length() + leftPadding
                     : (int) Math.floor((double) (longestStringLength - line.length()) / 2) + leftPadding));
 
             // text
@@ -121,7 +121,7 @@ public class Labels {
             sb.append(ConsoleFormatter.getSpace(align.equals(Align.RIGHT)
                     ? rightPadding
                     : align.equals(Align.LEFT)
-                    ?longestStringLength - line.length() + rightPadding
+                    ? longestStringLength - line.length() + rightPadding
                     : (int) Math.ceil((double) (longestStringLength - line.length()) / 2) + rightPadding));
             sb.append(verticalSide);
             sb.append("\n");
