@@ -98,6 +98,8 @@ public class Labels {
         sb.append(corner);
         sb.append("\n");
 
+        System.out.println("Drawing: "+borderLength+" of border length and "+longestStringLength+" of longest string");
+
         for (int i = 0; i < (int) Math.floor((double) (extraHeight - 1) / 2); i++) {
             sb.append(verticalSide);
             sb.append(ConsoleFormatter.getSpace(borderLength));
@@ -111,7 +113,7 @@ public class Labels {
             sb.append(ConsoleFormatter.getSpace(align.equals(Align.LEFT)
                     ? leftPadding
                     : align.equals(Align.RIGHT)
-                    ? longestStringLength - line.length() + leftPadding
+                    ? borderLength - line.length() + leftPadding
                     : (int) Math.floor((double) (longestStringLength - line.length()) / 2) + leftPadding));
 
             // text
@@ -121,7 +123,7 @@ public class Labels {
             sb.append(ConsoleFormatter.getSpace(align.equals(Align.RIGHT)
                     ? rightPadding
                     : align.equals(Align.LEFT)
-                    ? longestStringLength - line.length() + rightPadding
+                    ? borderLength - line.length() + rightPadding
                     : (int) Math.ceil((double) (longestStringLength - line.length()) / 2) + rightPadding));
             sb.append(verticalSide);
             sb.append("\n");
