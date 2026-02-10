@@ -1,3 +1,4 @@
+import Classes.CharacterCreator;
 import Classes.ConsoleFormatter;
 import Classes.Labels;
 import Classes.PlayerMovement;
@@ -7,10 +8,9 @@ import Objects.Player;
 
 import static Classes.ConsoleFormatter.*;
 void main() {
-    Player p = new Player("Janek", 100, 10, 10);
-    System.out.println(p);
+    CharacterCreator.CreateCharacter();
 
-    String formatted1 = ConsoleFormatter.create().red().text("This is red").reset().text(" | and this is not").toString();
+    /*String formatted1 = ConsoleFormatter.create().red().text("This is red").reset().text(" | and this is not").toString();
     System.out.println(formatted1);
     String formatted2 = RED + "This is red" + RESET + " | and this is not" + RESET;
     System.out.println(formatted2);
@@ -32,5 +32,5 @@ void main() {
         e.printStackTrace();
     }
 
-    PlayerMovement.printMap();
+    PlayerMovement.printMap();*/
 }

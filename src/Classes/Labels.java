@@ -3,15 +3,14 @@ package Classes;
 public class Labels {
     public enum Align {LEFT, CENTER, RIGHT}
 
-    ;
-
     public boolean printLabel(String text, Align align, int fixedWidth, int fixedHeight, int padding, char corner, char horizontalSide, char verticalSide) {
         System.out.println(getLabel(text, align, fixedWidth, fixedHeight, padding, corner, horizontalSide, verticalSide));
         return true;
     }
 
     public boolean printLabel(String text) {
-        return printLabel(text, Align.CENTER, text.length() + 2, 1,
+        String textW= text.replaceAll("\\u001B\\[[;\\d]*m", "");
+        return printLabel(text, Align.CENTER, textW.length() + 2, 1,
                 0, '+', '-', '|');
     }
 
@@ -30,7 +29,8 @@ public class Labels {
                 || (text.isEmpty() && fixedHeight < 0))
             return "";
 
-        int stringLength = text.length();
+        String textW = text.replaceAll("\\u001B\\[[;\\d]*m", "");
+        int stringLength = textW.length();
 
         sb.append(corner);
         int borderLength = Math.max(minWidth, stringLength + (align.equals(Align.CENTER) ? 2 * padding : padding));
@@ -48,18 +48,18 @@ public class Labels {
         sb.append(ConsoleFormatter.getSpace(align.equals(Align.RIGHT)
                 ? padding
                 : align.equals(Align.LEFT)
-                ? minWidth - text.length() - padding
-                : (int) Math.floor((minWidth - text.length()) / 2.0) + padding));
+                ? minWidth - textW.length() - padding
+                : (int) Math.floor((minWidth - textW.length()) / 2.0) + padding));
         sb.append(text);
         sb.append(ConsoleFormatter.getSpace(align.equals(Align.RIGHT)
-                ? minWidth - text.length() - padding
+                ? minWidth - textW.length() - padding
                 : align.equals(Align.LEFT)
                 ? padding
-                : (int) Math.ceil((minWidth - text.length()) / 2.0) + padding));
+                : (int) Math.ceil((minWidth - textW.length()) / 2.0) + padding));
         sb.append(verticalSide);
         sb.append("\n");
 
-        for (int i = 0; i < (int) Math.ceil((double) (fixedHeight) / 2); i++) {
+        for (int i = 0; i < (int) Math.ceil((double) (fixedHeight - 1) / 2); i++) {
             sb.append(verticalSide);
             sb.append(ConsoleFormatter.getSpace(minWidth));
             sb.append(verticalSide);
@@ -76,8 +76,9 @@ public class Labels {
     private int getLongestString(String... strings) {
         int max = 0;
         for (String string : strings) {
-            if (string.length() > max) {
-                max = string.length();
+            String s = string.replaceAll("\\u001B\\[[;\\d]*m", "");
+            if (s.length() > max) {
+                max = s.length();
             }
         }
         return max;
@@ -98,7 +99,7 @@ public class Labels {
         sb.append(corner);
         sb.append("\n");
 
-        System.out.println("Drawing: "+borderLength+" of border length and "+longestStringLength+" of longest string");
+        System.out.println("Drawing: " + borderLength + " of border length and " + longestStringLength + " of longest string");
 
         for (int i = 0; i < (int) Math.floor((double) (extraHeight - 1) / 2); i++) {
             sb.append(verticalSide);
@@ -108,13 +109,14 @@ public class Labels {
         }
 
         for (String line : multitext) {
+            String lineW = line.replaceAll("\\u001B\\[[;\\d]*m", "");
             // left | and space
             sb.append(verticalSide);
             sb.append(ConsoleFormatter.getSpace(align.equals(Align.LEFT)
                     ? leftPadding
                     : align.equals(Align.RIGHT)
-                    ? borderLength - line.length() + leftPadding
-                    : (int) Math.floor((double) (longestStringLength - line.length()) / 2) + leftPadding));
+                    ? borderLength - lineW.length() + leftPadding
+                    : (int) Math.floor((double) (longestStringLength - lineW.length()) / 2) + leftPadding));
 
             // text
             sb.append(line);
@@ -123,8 +125,8 @@ public class Labels {
             sb.append(ConsoleFormatter.getSpace(align.equals(Align.RIGHT)
                     ? rightPadding
                     : align.equals(Align.LEFT)
-                    ? borderLength - line.length() + rightPadding
-                    : (int) Math.ceil((double) (longestStringLength - line.length()) / 2) + rightPadding));
+                    ? borderLength - lineW.length() + rightPadding
+                    : (int) Math.ceil((double) (longestStringLength - lineW.length()) / 2) + rightPadding));
             sb.append(verticalSide);
             sb.append("\n");
         }

@@ -35,4 +35,11 @@ public class CharacterCreator {
             this.heroGender = null;
         }
     }
+
+    public static Character CreateCharacter() {
+        Labels labelsCreator = new Labels();
+        labelsCreator.printLabel(ConsoleFormatter.deregex("/bTworzenie postaci/0"));
+
+        return new Character(Class.Archer, Gender.Male);
+    }
 }
