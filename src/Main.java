@@ -1,14 +1,9 @@
-import Classes.CharacterCreator;
-import Classes.ConsoleFormatter;
-import Classes.Labels;
-import Classes.PlayerMovement;
 import Objects.Player;
 
 //   C:\Users\Komputer\IdeaProjects\JavaRPG
 
-import static Classes.ConsoleFormatter.*;
 void main() {
-    CharacterCreator.CreateCharacter();
+    Player p = Player.PlayerCreation();
 
     /*String formatted1 = ConsoleFormatter.create().red().text("This is red").reset().text(" | and this is not").toString();
     System.out.println(formatted1);

@@ -15,6 +15,14 @@ public abstract class Entity {
         this.name = name;
     }
 
+    public Entity() {
+        this.maxHealth = 0;
+        this.health = 0;
+        this.protection = 0;
+        this.baseDamage = 0;
+        this.name = "";
+    }
+
     public void DealDamage(int amount) {
         this.health = Math.max(0, this.health - amount);
     }

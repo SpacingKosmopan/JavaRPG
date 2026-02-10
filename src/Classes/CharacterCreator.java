@@ -1,11 +1,8 @@
 package Classes;
 
-public class CharacterCreator {
-    // 1. Name your character
-    // 2. Choose gender
-    // 3. Choose class
-    // a. mage
+import java.util.Scanner;
 
+public class CharacterCreator {
     public enum Class {
         Mage,
         Knight,
@@ -18,8 +15,8 @@ public class CharacterCreator {
     }
 
     public static class Character {
-        Class heroClass;
-        Gender heroGender;
+        public Class heroClass;
+        public Gender heroGender;
 
         public String pronoun(String maleCase, String femaleCase) {
             return heroGender == Gender.Male ? maleCase : femaleCase;
@@ -34,12 +31,5 @@ public class CharacterCreator {
             this.heroClass = null;
             this.heroGender = null;
         }
-    }
-
-    public static Character CreateCharacter() {
-        Labels labelsCreator = new Labels();
-        labelsCreator.printLabel(ConsoleFormatter.deregex("/bTworzenie postaci/0"));
-
-        return new Character(Class.Archer, Gender.Male);
     }
 }
