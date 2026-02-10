@@ -28,7 +28,8 @@ public class ConsoleFormatter {
             'y', YELLOW,
             'f', RED_BCKG,
             'n', BLACK_BCKG,
-            '0', RESET
+            '0', RESET,
+            'B',BOLD
     );
 
     public static String deregex(String textToFormat) {

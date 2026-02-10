@@ -4,6 +4,13 @@ import java.io.File;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+┌────┐
+│    │
+└────┘
+█ ▓ ▒ ░
+*/
+
 public class PlayerMovement {
     private int playerXPosition;
     private int playerYPosition;
@@ -35,6 +42,6 @@ public class PlayerMovement {
         String[] map = getMap();
         Labels labelCreator = new Labels();
         System.out.println("\n");
-        System.out.println(labelCreator.getLabel(Labels.Align.LEFT, 0, 0, 3, 3, '+', '-', '|', map));
+        System.out.println(labelCreator.getLabel(Labels.Align.LEFT, 0, 0, 3, 3, '+', '─', '│', map));
     }
 }

@@ -19,6 +19,10 @@ public class SkillLevelManager {
         this.experience += Math.abs(amount);
     }
 
+    public int getHeroLevel() {
+        return this.heroLevel;
+    }
+
     public static final List<Integer> EXPERIENCE_REQUIRED = List.of(10, 20, 30, 40, 50,
             70, 90, 110, 130, 150,
             180, 210, 240, 270, 300,

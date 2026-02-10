@@ -17,19 +17,22 @@ public class CharacterCreator {
         Female
     }
 
-    public class Character {
+    public static class Character {
         Class heroClass;
-        String heroName;
         Gender heroGender;
 
-        public String pronoun(Gender g, String maleCase, String femaleCase) {
-            return g == Gender.Male ? maleCase : femaleCase;
+        public String pronoun(String maleCase, String femaleCase) {
+            return heroGender == Gender.Male ? maleCase : femaleCase;
         }
 
-        public Character(Class heroClass, String heroName, Gender heroGender) {
+        public Character(Class heroClass, Gender heroGender) {
             this.heroClass = heroClass;
-            this.heroName = heroName;
             this.heroGender = heroGender;
+        }
+
+        public Character() {
+            this.heroClass = null;
+            this.heroGender = null;
         }
     }
 }
