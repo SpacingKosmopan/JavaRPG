@@ -1,18 +1,31 @@
+import Classes.ConsoleFormatter;
+import Classes.Labels;
+import Classes.PlayerMovement;
 import Objects.Player;
 
 //   C:\Users\Komputer\IdeaProjects\JavaRPG
 
 void main() {
-    Player p = Player.PlayerCreation();
+    // initialize game
+   try {
+       System.out.println("Initializing...");
+       MainMenu();
+       Player p = Player.PlayerCreation();
+       Thread.sleep(3000);
+       System.out.println(ConsoleFormatter.deregex("/y(i)/0 Twoja postać jest gotowa. Możesz teraz wyruszać w świat. Miażdż przeciwników, podbijaj twierdze, odkrywaj zaklęte przedmioty.\nPamiętaj, twoim zadaniem jest dostanie się do Smoka Gewuncha, zabicie go i uwolnienie mieszkańców królestwa od strachu i koszmarów."));
+       Thread.sleep(2000);
+       GameLoop();
+   }
+   catch (Exception e) {
+       e.printStackTrace();
+   }
 
     /*String formatted1 = ConsoleFormatter.create().red().text("This is red").reset().text(" | and this is not").toString();
     System.out.println(formatted1);
     String formatted2 = RED + "This is red" + RESET + " | and this is not" + RESET;
     System.out.println(formatted2);
 
-    Labels labelsCreator = new Labels();
-    System.out.println(labelsCreator.getLabel(Labels.Align.CENTER, 0, 0, 5, 5, '+', '-', '|', "1. START", "2. Settings", "3. Credits", "4. Quit"));
-    System.out.println(labelsCreator.getLabel(Labels.Align.LEFT, 0, 0, 2, 5, '+', '-', '|', "CHARACTERS", "1. Create", "2. Change", "3. Edit", "4. Delete", "5. Go back"));
+     System.out.println(labelsCreator.getLabel(Labels.Align.LEFT, 0, 0, 2, 5, '+', '-', '|', "CHARACTERS", "1. Create", "2. Change", "3. Edit", "4. Delete", "5. Go back"));
     for (int i = 1; i < 180; i++) {
         System.out.print(i % 10 == 0 ? "." : i % 10);
     }
@@ -28,4 +41,52 @@ void main() {
     }
 
     PlayerMovement.printMap();*/
+}
+
+void MainMenu() throws InterruptedException {
+    Labels labelsCreator = new Labels();
+    String input = "";
+    Scanner sc = new Scanner(System.in);
+
+    while (true) {
+        Thread.sleep(2000);
+        System.out.println(labelsCreator.getLabel(
+                Labels.Align.CENTER, 0, 0, 5, 5, '+', '-', '|',
+                "1. START", "2. Ustawienia", "3. Kredyty", "4. Wyjście"));
+        System.out.print("Enter your choice: ");
+        input = sc.nextLine();
+        if (input.equals("1")) {
+            break; // the while(true)
+            // CHARACTER
+            // you haven't created character yet
+            // you have created character - do you wish to continue or create a new one?
+        } else if (input.equals("2")) {
+            System.out.println("Settings are unavailable yet");
+        } else if (input.equals("3")) {
+            System.out.println("Credits are unavailable yet");
+        } else if (input.equals("4")) {
+            System.out.println("Quit");
+            System.exit(0);
+        }
+    }
+}
+
+void GameLoop() throws InterruptedException {
+    Thread.sleep(1000);
+    Labels labelsCreator = new Labels();
+    System.out.println(labelsCreator.getLabel(
+            Labels.Align.CENTER, 0, 0, 5, 5, '+', '-', '|',
+            "1. Mapa", "2. Ekwipunek", "3. Misje", "4. Wyjdź"));
+    String input = "";
+    Scanner sc = new Scanner(System.in);
+
+    while (true) {
+        input = sc.nextLine();
+        if (input.equals("1")) {
+            PlayerMovement.printMap();
+        } else if (input.equals("4")) {
+            System.out.println("Quit");
+            break;
+        }
+    }
 }
