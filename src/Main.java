@@ -11,8 +11,27 @@ void main() {
     Player p = null;
     try {
         game.MainMenu(sc);
-        p = Player.PlayerCreation(sc);
-        FilesManager.SavePlayer(p);
+        boolean playerExists = false;
+        try {
+            String[] existing = FilesManager.ReadFileContent(FilesManager.Files.PlayerCharacterData);
+            if (existing.length > 0) playerExists = true;
+        } catch (Exception ignored) {
+        }
+
+        if (playerExists) {
+            System.out.println(ConsoleFormatter.deregex("/y(i)/0 Istnieje już zapisany gracz. Czy chcesz kontynuować (c) czy stworzyć nowego (n)? "));
+            String choice = sc.nextLine().toLowerCase(Locale.ROOT);
+            if (choice.equals("c")) {
+                p = FilesManager.LoadPlayer();
+                System.out.println("Wczytano gracza: " + p.name);
+            } else {
+                p = Player.PlayerCreation(sc);
+                FilesManager.SavePlayer(p);
+            }
+        } else {
+            p = Player.PlayerCreation(sc);
+            FilesManager.SavePlayer(p);
+        }
     } catch (Exception e) {
         e.printStackTrace();
     }

@@ -12,11 +12,15 @@ import java.util.Scanner;
 
 public class FilesManager {
     public enum Files {
-        PlayerCharacterData
+        PlayerCharacterData,
+        MainMap,
+        MainMapDescription
     }
 
     public static Map<Files, String> FILES = Map.of(
-            Files.PlayerCharacterData, "player_character_data.txt"
+            Files.PlayerCharacterData, "Files/player_character_data.txt",
+            Files.MainMap, "Files/Map.txt",
+            Files.MainMapDescription, "Files/MapDesc.txt"
     );
 
     public static String[] ReadFileContent(Files file) {

@@ -6,15 +6,28 @@ public class MainGame {
     public void GameLoop(Scanner sc) throws InterruptedException {
         Thread.sleep(1000);
         Labels labelsCreator = new Labels();
-        System.out.println(labelsCreator.getLabel(
-                Labels.Align.CENTER, 0, 0, 5, 5, '+', '-', '|',
-                "1. Mapa", "2. Ekwipunek", "3. Misje", "4. Wyjdź"));
         String input = "";
 
         while (true) {
+            System.out.println(labelsCreator.getLabel(
+                    Labels.Align.CENTER, 0, 0, 5, 5, '+', '-', '|',
+                    "1. Mapa", "2. Ekwipunek", "3. Misje", "4. Wyjdź"));
             input = sc.nextLine();
             if (input.equals("1")) {
-                PlayerMovement.printMap();
+                String[] map = FilesManager.ReadFileContent(FilesManager.Files.MainMap);
+                for (String s : map) {
+                    System.out.println(s);
+                }
+                map = FilesManager.ReadFileContent(FilesManager.Files.MainMapDescription);
+                while(true) {
+                    for (String s : map) {
+                        System.out.println(ConsoleFormatter.deregex(s));
+                    }
+                    input = sc.nextLine();
+                    if (input.equals("5")) {
+                        break; // the while(true) loop
+                    }
+                }
             } else if (input.equals("4")) {
                 System.out.println("Quit");
                 break;
@@ -31,13 +44,10 @@ public class MainGame {
             System.out.println(labelsCreator.getLabel(
                     Labels.Align.CENTER, 0, 0, 5, 5, '+', '-', '|',
                     "1. START", "2. Ustawienia", "3. Kredyty", "4. Wyjście"));
-            System.out.print("Enter your choice: ");
+            System.out.print("Podaj wybór: ");
             input = sc.nextLine();
             if (input.equals("1")) {
                 break; // the while(true)
-                // CHARACTER
-                // you haven't created character yet
-                // you have created character - do you wish to continue or create a new one?
             } else if (input.equals("2")) {
                 System.out.println("Settings are unavailable yet");
             } else if (input.equals("3")) {
@@ -49,7 +59,7 @@ public class MainGame {
         }
     }
 
-    public static void WaitForEnter(Scanner sc) {
+    public void WaitForEnter(Scanner sc) {
         System.out.println("\tNaciśnij ENTER, aby przejść dalej");
         sc.nextLine();
     }
