@@ -1,7 +1,4 @@
-import Classes.ConsoleFormatter;
-import Classes.FilesManager;
-import Classes.Labels;
-import Classes.PlayerMovement;
+import Classes.*;
 import Objects.Player;
 
 //   C:\Users\Komputer\IdeaProjects\JavaRPG
@@ -9,25 +6,24 @@ import Objects.Player;
 void main() {
     // initialize game
     System.out.println("Initializing...");
+    MainGame game = new MainGame();
     Scanner sc = new Scanner(System.in);
     Player p = null;
-   try {
-       MainMenu(sc);
-       p = Player.PlayerCreation(sc);
-       FilesManager.SavePlayer(p);
-   }
-   catch (Exception e) {
-       e.printStackTrace();
-   }
+    try {
+        game.MainMenu(sc);
+        p = Player.PlayerCreation(sc);
+        FilesManager.SavePlayer(p);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
 
-    WaitForEnter(sc);
+    game.WaitForEnter(sc);
     System.out.println(ConsoleFormatter.deregex("/y(i)/0 Twoja postać jest gotowa. Możesz teraz wyruszać w świat. Miażdż przeciwników, podbijaj twierdze, odkrywaj zaklęte przedmioty.\nPamiętaj, twoim zadaniem jest dostanie się do Smoka Gewuncha, zabicie go i uwolnienie mieszkańców królestwa od strachu i koszmarów."));
-    WaitForEnter(sc);
+    game.WaitForEnter(sc);
 
     try {
-        GameLoop(sc);
-    }
-    catch (Exception e) {
+        game.GameLoop(sc);
+    } catch (Exception e) {
         e.printStackTrace();
     }
 
@@ -52,55 +48,4 @@ void main() {
     }
 
     PlayerMovement.printMap();*/
-}
-
-public static void WaitForEnter(Scanner sc) {
-    System.out.println("\tNaciśnij ENTER, aby przejść dalej");
-    sc.nextLine();
-}
-
-void MainMenu(Scanner sc) throws InterruptedException {
-    Labels labelsCreator = new Labels();
-    String input = "";
-
-    while (true) {
-        Thread.sleep(2000);
-        System.out.println(labelsCreator.getLabel(
-                Labels.Align.CENTER, 0, 0, 5, 5, '+', '-', '|',
-                "1. START", "2. Ustawienia", "3. Kredyty", "4. Wyjście"));
-        System.out.print("Enter your choice: ");
-        input = sc.nextLine();
-        if (input.equals("1")) {
-            break; // the while(true)
-            // CHARACTER
-            // you haven't created character yet
-            // you have created character - do you wish to continue or create a new one?
-        } else if (input.equals("2")) {
-            System.out.println("Settings are unavailable yet");
-        } else if (input.equals("3")) {
-            System.out.println("Credits are unavailable yet");
-        } else if (input.equals("4")) {
-            System.out.println("Quit");
-            System.exit(0);
-        }
-    }
-}
-
-void GameLoop(Scanner sc) throws InterruptedException {
-    Thread.sleep(1000);
-    Labels labelsCreator = new Labels();
-    System.out.println(labelsCreator.getLabel(
-            Labels.Align.CENTER, 0, 0, 5, 5, '+', '-', '|',
-            "1. Mapa", "2. Ekwipunek", "3. Misje", "4. Wyjdź"));
-    String input = "";
-
-    while (true) {
-        input = sc.nextLine();
-        if (input.equals("1")) {
-            PlayerMovement.printMap();
-        } else if (input.equals("4")) {
-            System.out.println("Quit");
-            break;
-        }
-    }
 }
