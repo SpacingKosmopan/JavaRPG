@@ -1,10 +1,10 @@
-1. /gTawerna/0 - znajduje się tam wiele ludzi, którzy potrzebują pomocy.
+1. /bTawerna/0 - znajduje się tam wiele ludzi, którzy potrzebują pomocy.
 Pochodź, popytaj, a na pewno dostaniesz zadanie do wykonania.
-2. /gPrzetwórnia/0 - jeżeli masz za dużo zasobów, to możesz udać się
+2. /bPrzetwórnia/0 - jeżeli masz za dużo zasobów, to możesz udać się
 do przetwórni. Tam zamienisz je na inne przydatniejsze rzeczy.
-3. /gMieszkania/0 - zwykle nie ma tam wielu ludzi, ale na pewno znajdzie
+3. /bMieszkania/0 - zwykle nie ma tam wielu ludzi, ale na pewno znajdzie
 się ktoś, kto za ci użyteczną wskazówkę. Możesz też udać się
 do swojego mieszkania, aby odpocząć i się zregenerować
-4. /gOpuść miasteczko/0 - Jeżeli jesteś gotowy na wyprawę i podbój
+4. /bOpuść miasteczko/0 - Jeżeli jesteś gotowy na wyprawę i podbój
 terenów, to śmiało możesz iść.
-5. /gWyjdź do menu/0
+5. /bWyjdź do menu/0

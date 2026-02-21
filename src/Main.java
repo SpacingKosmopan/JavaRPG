@@ -19,7 +19,7 @@ void main() {
         }
 
         if (playerExists) {
-            System.out.println(ConsoleFormatter.deregex("/y(i)/0 Istnieje już zapisany gracz. Czy chcesz kontynuować (c) czy stworzyć nowego (n)? "));
+            System.out.println(ConsoleFormatter.deregex("/y(i)/0 Istnieje już zapisany gracz. Czy chcesz kontynuować (/bc/0) czy stworzyć nowego (/bn/0)? "));
             String choice = sc.nextLine().toLowerCase(Locale.ROOT);
             if (choice.equals("c")) {
                 p = FilesManager.LoadPlayer();

@@ -3,8 +3,7 @@ package Classes;
 import java.util.Scanner;
 
 public class MainGame {
-    public void GameLoop(Scanner sc) throws InterruptedException {
-        Thread.sleep(1000);
+    public void GameLoop(Scanner sc) {
         Labels labelsCreator = new Labels();
         String input = "";
 
@@ -24,7 +23,10 @@ public class MainGame {
                         System.out.println(ConsoleFormatter.deregex(s));
                     }
                     input = sc.nextLine();
-                    if (input.equals("5")) {
+                    if (input.equals("4")) {
+                        Adventure(sc);
+                    }
+                    else if (input.equals("5")) {
                         break; // the while(true) loop
                     }
                 }
@@ -33,6 +35,20 @@ public class MainGame {
                 break;
             }
         }
+    }
+
+    public void Adventure(Scanner sc)  {
+        System.out.println(ConsoleFormatter.deregex("/y(i)/0 Wyruszasz na przygodę."));
+        WaitForEnter(sc);
+        System.out.println(ConsoleFormatter.deregex("/r(!)/0 Odnalazłeś stary loch! Na pewno jest pełen skarbów... i przeciwników"));
+        WaitForEnter(sc);
+        while(true){
+            GenerateDungeonRoom();
+        }
+    }
+
+    public void GenerateDungeonRoom(){
+
     }
 
     public void MainMenu(Scanner sc) throws InterruptedException {
