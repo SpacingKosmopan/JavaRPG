@@ -1,7 +1,5 @@
 package Classes;
 
-import java.util.Scanner;
-
 public class CharacterCreator {
     public enum Class {
         Mage,

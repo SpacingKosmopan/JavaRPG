@@ -34,30 +34,32 @@ public final class Player extends Entity {
         return ConsoleFormatter.deregex("/B" + name + "/0 - <hp:/r" + health + "/0> <prot:/b" + protection + "/0> <bdmg:/y" + baseDamage + "/0> <lvl:/g" + skillManager.getHeroLevel() + "/0>");
     }
 
-    public static Player PlayerCreation() throws InterruptedException {
+    public static Player PlayerCreation(Scanner scanner) throws InterruptedException {
         Labels labelsCreator = new Labels();
-        Scanner scanner = new Scanner(System.in);
         Player p = new Player();
-        String input = "";
+        String input;
+
         labelsCreator.printLabel(ConsoleFormatter.deregex("/bTworzenie postaci/0"));
         Thread.sleep(2000);
 
+        // ===== Nazwa =====
         System.out.println(ConsoleFormatter.deregex("/y(i)/0 Nazwij swoją postać: "));
         input = scanner.nextLine();
         if (input.isEmpty()) {
             System.out.println("Wystąpił problem. Default: Roman");
             p.name = "Roman";
-        }
+        } else p.name = input;
 
+        // ===== Płeć i klasa =====
         CharacterCreator.Character c = new CharacterCreator.Character();
 
         System.out.println(ConsoleFormatter.deregex("/y(i)/0 Wybierz płeć /b(m//k)/0: "));
         input = scanner.nextLine();
-        if (input.equals("m")) {
+        if (input.equals("m"))
             c.heroGender = CharacterCreator.Gender.Male;
-        } else if (input.equals("k")) {
+        else if (input.equals("k"))
             c.heroGender = CharacterCreator.Gender.Female;
-        } else {
+        else {
             System.out.println("Wystąpił problem. Default: Mężczyzna");
             c.heroGender = CharacterCreator.Gender.Male;
         }
@@ -78,6 +80,13 @@ public final class Player extends Entity {
             case "m" -> CharacterCreator.Class.Mage;
             default -> CharacterCreator.Class.Knight;
         };
+
+        // ===== Przypisanie =====
+        p.character = c;
+        p.skillManager = new SkillLevelManager();
+        p.health = 100;
+        p.protection = 10;
+        p.baseDamage = 5;
 
         switch (input) {
             case "l" -> {

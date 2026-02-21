@@ -31,6 +31,10 @@ public abstract class Entity {
         return this.health;
     }
 
+    public int getBaseDamage() {
+        return baseDamage;
+    }
+
     public void setHealth(int health) {
         this.health = Math.abs(health);
     }

@@ -12,7 +12,7 @@ public class SkillLevelManager {
     // some abilities require battle energy to be performed during battle
 
     private int heroLevel = 0;
-    private int skillPoints = 0;
+    public int skillPoints = 0;
     private float experience = 0;
 
     public void increaseExperience(float amount) {
@@ -21,6 +21,26 @@ public class SkillLevelManager {
 
     public int getHeroLevel() {
         return this.heroLevel;
+    }
+
+    public int getSkillPoints() {
+        return skillPoints;
+    }
+
+    public float getExperience() {
+        return experience;
+    }
+
+    public void setHeroLevel(int heroLevel) {
+        this.heroLevel = Math.max(heroLevel, 0);
+    }
+
+    public void setSkillPoints(int skillPoints) {
+        this.skillPoints = Math.max(skillPoints, 0);
+    }
+
+    public void setExperience(float experience) {
+        this.experience = Math.max(experience, 0);
     }
 
     public static final List<Integer> EXPERIENCE_REQUIRED = List.of(10, 20, 30, 40, 50,

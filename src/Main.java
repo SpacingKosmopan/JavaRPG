@@ -1,4 +1,5 @@
 import Classes.ConsoleFormatter;
+import Classes.FilesManager;
 import Classes.Labels;
 import Classes.PlayerMovement;
 import Objects.Player;
@@ -7,18 +8,28 @@ import Objects.Player;
 
 void main() {
     // initialize game
+    System.out.println("Initializing...");
+    Scanner sc = new Scanner(System.in);
+    Player p = null;
    try {
-       System.out.println("Initializing...");
-       MainMenu();
-       Player p = Player.PlayerCreation();
-       Thread.sleep(3000);
-       System.out.println(ConsoleFormatter.deregex("/y(i)/0 Twoja postać jest gotowa. Możesz teraz wyruszać w świat. Miażdż przeciwników, podbijaj twierdze, odkrywaj zaklęte przedmioty.\nPamiętaj, twoim zadaniem jest dostanie się do Smoka Gewuncha, zabicie go i uwolnienie mieszkańców królestwa od strachu i koszmarów."));
-       Thread.sleep(2000);
-       GameLoop();
+       MainMenu(sc);
+       p = Player.PlayerCreation(sc);
+       FilesManager.SavePlayer(p);
    }
    catch (Exception e) {
        e.printStackTrace();
    }
+
+    WaitForEnter(sc);
+    System.out.println(ConsoleFormatter.deregex("/y(i)/0 Twoja postać jest gotowa. Możesz teraz wyruszać w świat. Miażdż przeciwników, podbijaj twierdze, odkrywaj zaklęte przedmioty.\nPamiętaj, twoim zadaniem jest dostanie się do Smoka Gewuncha, zabicie go i uwolnienie mieszkańców królestwa od strachu i koszmarów."));
+    WaitForEnter(sc);
+
+    try {
+        GameLoop(sc);
+    }
+    catch (Exception e) {
+        e.printStackTrace();
+    }
 
     /*String formatted1 = ConsoleFormatter.create().red().text("This is red").reset().text(" | and this is not").toString();
     System.out.println(formatted1);
@@ -43,10 +54,14 @@ void main() {
     PlayerMovement.printMap();*/
 }
 
-void MainMenu() throws InterruptedException {
+public static void WaitForEnter(Scanner sc) {
+    System.out.println("\tNaciśnij ENTER, aby przejść dalej");
+    sc.nextLine();
+}
+
+void MainMenu(Scanner sc) throws InterruptedException {
     Labels labelsCreator = new Labels();
     String input = "";
-    Scanner sc = new Scanner(System.in);
 
     while (true) {
         Thread.sleep(2000);
@@ -71,14 +86,13 @@ void MainMenu() throws InterruptedException {
     }
 }
 
-void GameLoop() throws InterruptedException {
+void GameLoop(Scanner sc) throws InterruptedException {
     Thread.sleep(1000);
     Labels labelsCreator = new Labels();
     System.out.println(labelsCreator.getLabel(
             Labels.Align.CENTER, 0, 0, 5, 5, '+', '-', '|',
             "1. Mapa", "2. Ekwipunek", "3. Misje", "4. Wyjdź"));
     String input = "";
-    Scanner sc = new Scanner(System.in);
 
     while (true) {
         input = sc.nextLine();

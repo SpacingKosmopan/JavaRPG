@@ -30,6 +30,8 @@ public class PlayerMovement {
                 String line = fileScanner.nextLine();
                 map.add(line);
             }
+
+            fileScanner.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
