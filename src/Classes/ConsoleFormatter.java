@@ -81,11 +81,11 @@ public class ConsoleFormatter {
     }
 
     public static String getSpace(int amount) {
-        String text = "";
+        StringBuilder output = new StringBuilder();
         for (int i = 0; i < amount; i++) {
-            text += " ";
+            output.append(" ");
         }
-        return text;
+        return output.toString();
     }
 
     public static void chars(char c, int amount) {
@@ -95,10 +95,10 @@ public class ConsoleFormatter {
     }
 
     public static String getChars(char c, int amount) {
-        String text = "";
+        StringBuilder output = new StringBuilder();
         for (int i = 0; i < amount; i++) {
-            text += c;
+            output.append(c);
         }
-        return text;
+        return output.toString();
     }
 }
