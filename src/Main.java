@@ -41,7 +41,7 @@ void main() {
     game.WaitForEnter(sc);
 
     try {
-        game.GameLoop(sc);
+        game.GameLoop(sc, p);
     } catch (Exception e) {
         e.printStackTrace();
     }

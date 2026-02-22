@@ -35,6 +35,16 @@ public abstract class Entity {
         return baseDamage;
     }
 
+    public void setBaseDamage(int baseDamage) {
+        this.baseDamage = baseDamage;
+    }
+
+    public int CalculateDamageAfterProtection(int rawDamage) {
+        double reductionMultiplier = 1 - (protection / 100.0);
+        int reduced = (int) Math.floor(rawDamage * reductionMultiplier);
+        return Math.max(1, reduced);
+    }
+
     public void setHealth(int health) {
         this.health = Math.abs(health);
     }
@@ -49,4 +59,8 @@ public abstract class Entity {
 
     @Override
     public abstract String toString();
+
+    public int getProtection() {
+        return protection;
+    }
 }

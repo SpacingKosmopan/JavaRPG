@@ -1,9 +1,12 @@
 package Classes;
 
 import java.util.Scanner;
+import java.util.Random;
+import Objects.Player;
+import Objects.Enemy;
 
 public class MainGame {
-    public void GameLoop(Scanner sc) {
+    public void GameLoop(Scanner sc, Player p) {
         Labels labelsCreator = new Labels();
         String input = "";
 
@@ -13,20 +16,20 @@ public class MainGame {
                     "1. Mapa", "2. Ekwipunek", "3. Misje", "4. Wyjdź"));
             input = sc.nextLine();
             if (input.equals("1")) {
-                String[] map = FilesManager.ReadFileContent(FilesManager.Files.MainMap);
-                for (String s : map) {
-                    System.out.println(s);
-                }
-                map = FilesManager.ReadFileContent(FilesManager.Files.MainMapDescription);
-                while(true) {
+                Adventuring a = new Adventuring();
+                while (true) {
+                    String[] map = FilesManager.ReadFileContent(FilesManager.Files.MainMap);
+                    for (String s : map) {
+                        System.out.println(s);
+                    }
+                    map = FilesManager.ReadFileContent(FilesManager.Files.MainMapDescription);
                     for (String s : map) {
                         System.out.println(ConsoleFormatter.deregex(s));
                     }
                     input = sc.nextLine();
                     if (input.equals("4")) {
-                        Adventure(sc);
-                    }
-                    else if (input.equals("5")) {
+                        a.Adventure(sc, p);
+                    } else if (input.equals("5")) {
                         break; // the while(true) loop
                     }
                 }
@@ -35,20 +38,6 @@ public class MainGame {
                 break;
             }
         }
-    }
-
-    public void Adventure(Scanner sc)  {
-        System.out.println(ConsoleFormatter.deregex("/y(i)/0 Wyruszasz na przygodę."));
-        WaitForEnter(sc);
-        System.out.println(ConsoleFormatter.deregex("/r(!)/0 Odnalazłeś stary loch! Na pewno jest pełen skarbów... i przeciwników"));
-        WaitForEnter(sc);
-        while(true){
-            GenerateDungeonRoom();
-        }
-    }
-
-    public void GenerateDungeonRoom(){
-
     }
 
     public void MainMenu(Scanner sc) throws InterruptedException {
