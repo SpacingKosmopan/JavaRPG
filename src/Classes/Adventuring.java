@@ -7,18 +7,18 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Adventuring {
-    private java.util.Random random = new java.util.Random();
+    private final java.util.Random random = new java.util.Random();
     private int dungeonDepth = 1;
 
     public void Adventure(Scanner sc, Player player) {
 
         dungeonDepth = 1;
 
-        System.out.println(ConsoleFormatter.deregex("/yWchodzisz do lochu.../0"));
+        System.out.println(ConsoleFormatter.deregex("\n/yWchodzisz do lochu.../0"));
 
         while (player.getHealth() > 0) {
 
-            System.out.println("\n===============================");
+            System.out.println("===============================");
             System.out.println("Głębokość: " + dungeonDepth);
             System.out.println(player);
 
@@ -37,7 +37,7 @@ public class Adventuring {
 
         System.out.println("""
                 1. Idź głębiej (wysokie ryzyko, lepsze nagrody)
-                2. Przeszukaj pomieszczenie (umiarkowane ryzyko)
+                2. Przeszukaj pomieszczenie (tylko dwa razy na poziom, nagroda lub kara)
                 3. Odpocznij (leczenie, możliwa zasadzka)
                 4. Ucieknij z lochu
                 """);
@@ -78,12 +78,12 @@ public class Adventuring {
                 int roll = random.nextInt(100);
 
                 if (roll < 50) {
-                    System.out.println("Nic nie znalazłeś.");
+                    System.out.println("Nic nie znalazłeś");
 
                 } else if (roll < 80) {
                     int heal = 10 + dungeonDepth;
                     player.Heal(heal);
-                    System.out.println("Znalazłeś zioła. +" + heal + " HP");
+                    System.out.println("Znalazłeś zioła +" + heal + " HP");
 
                 } else {
                     int damage = 8 + dungeonDepth;
@@ -114,7 +114,7 @@ public class Adventuring {
             // ===== UCIECZKA =====
             case "4" -> {
                 System.out.println(ConsoleFormatter.deregex(
-                        "/yOpuszczasz loch z głębokości " + dungeonDepth + "./0"));
+                        "/yOpuszczasz loch z głębokości " + dungeonDepth + "/0"));
                 dungeonDepth = 1;
                 player.Heal((int) (player.maxHealth * 0.3));
                 return false;
@@ -158,17 +158,15 @@ public class Adventuring {
 
             System.out.println("""
                     1. Atak
-                    2. Obrona (+20% redukcji na tę turę)
-                    3. Silny atak (200% dmg, 40% szansy na kontrę)
+                    2. Obrona (+20% redukcji obrażeń na tą turę, +10% do zdrowia)
+                    3. Silny atak (300% dmg, 40% szansy na kontrę)
                     4. Leczenie (""" + potionsLeft + ")");
 
             String input = sc.nextLine();
 
             boolean defending = false;
 
-            // ===== TURA GRACZA =====
             switch (input) {
-
                 case "1" -> {
                     int dmg = CalculateDamageAfterProtection(
                             player.getBaseDamage(),
@@ -177,18 +175,16 @@ public class Adventuring {
                     enemy.DealDamage(dmg);
                     System.out.println("Zadajesz " + dmg + " obrażeń.");
                 }
-
                 case "2" -> {
                     defending = true;
                     System.out.println("Przygotowujesz się na atak.");
                 }
-
                 case "3" -> {
                     int base = (int) (player.getBaseDamage() * 2);
                     int dmg = CalculateDamageAfterProtection(base, enemy.getProtection());
                     enemy.DealDamage(dmg);
 
-                    System.out.println("Zadajesz SILNY cios za " + dmg + " obrażeń!");
+                    System.out.println("Zadajesz SILNY cios za " + dmg + " obrażeń");
 
                     if (random.nextInt(100) < 40 && enemy.getHealth() > 0) {
                         int counter = CalculateDamageAfterProtection(
@@ -196,7 +192,7 @@ public class Adventuring {
                                 player.getProtection()
                         );
                         player.DealDamage(counter);
-                        System.out.println("Przeciwnik kontruje! Otrzymujesz " + counter + " obrażeń.");
+                        System.out.println("Przeciwnik kontruje! Otrzymujesz " + counter + " obrażeń");
                     }
                 }
 
@@ -205,13 +201,13 @@ public class Adventuring {
                         int heal = (int) (player.maxHealth * 0.25);
                         player.Heal(heal);
                         potionsLeft--;
-                        System.out.println("Leczysz się za " + heal + " HP.");
+                        System.out.println("Leczysz się za " + heal + " HP");
                     } else {
                         System.out.println("Nie masz mikstur!");
                     }
                 }
 
-                default -> System.out.println("Tracisz turę przez niezdecydowanie...");
+                default -> System.out.println("Tracisz turę...");
             }
 
             if (enemy.getHealth() <= 0)
@@ -228,7 +224,7 @@ public class Adventuring {
             );
 
             player.DealDamage(enemyDamage);
-            System.out.println("Przeciwnik zadaje " + enemyDamage + " obrażeń.");
+            System.out.println("Przeciwnik zadaje " + enemyDamage + " obrażeń");
         }
 
         // ===== KONIEC WALKI =====

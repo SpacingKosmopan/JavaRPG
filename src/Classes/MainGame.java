@@ -33,6 +33,10 @@ public class MainGame {
                         break; // the while(true) loop
                     }
                 }
+            } else if (input.equals("2")) {
+                System.out.println("Inventory is not available yet");
+            } else if (input.equals("3")) {
+                System.out.println("Missions are not available yet");
             } else if (input.equals("4")) {
                 System.out.println("Quit");
                 break;

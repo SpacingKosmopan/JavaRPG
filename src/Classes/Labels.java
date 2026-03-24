@@ -99,7 +99,7 @@ public class Labels {
         sb.append(corner);
         sb.append("\n");
 
-        System.out.println("Drawing: " + borderLength + " of border length and " + longestStringLength + " of longest string");
+        //System.out.println("Drawing: " + borderLength + " of border length and " + longestStringLength + " of longest string");
 
         for (int i = 0; i < (int) Math.floor((double) (extraHeight - 1) / 2); i++) {
             sb.append(verticalSide);

@@ -6,7 +6,6 @@ import Objects.Player;
 public class Fight {
     // static do usunięcia potem
     public static void BeginFight(Player player, Enemy enemy) {
-
         System.out.printf("Beware, Player! You are about to fight %s!%n", enemy.getHealth());
 
         int loops = 0;

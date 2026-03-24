@@ -65,7 +65,7 @@ public final class Player extends Entity {
         }
 
         System.out.println(ConsoleFormatter.deregex("/y(i)/0 Wybierz klasę: /b\n" +
-                "\t(r) Rycerz: /rmało życia/b, /gdużo obrony/b i /gdużo obrażeń/b, /rwolno zbiera punkty doświadczenia/b\n" +
+                "\t(r) Rycerz: /gdużo życia/b, /gdużo obrony/b i /rmało obrażeń/b, /rwolno zbiera punkty doświadczenia/b\n" +
                 "/0Dzierży potężny miecz i epicką zbroję, które umożliwiają mu łatwe zadawanie obrażeń i wykańczanie przeciwników.\nWyszkolony w środku kontynentu, gdzie wiele skłóconych królestw toczyło boje, a rycerze do ostatniej kropli krwi bronili swojego kawałka.\n/b" +
                 "\t(l) Łucznik: /rmało życia/b, /rmało obrony/b i /gdużo obrażeń/b, /gszybko zbiera punkty doświadczenia/b\n" +
                 "/0Może i nie jest najsilniejszy, ale za to dobrze wytrenowany. Szkolony na północy, gdzie uczył się od podstaw jak składać łuk,\npo zaawansowane techniki, które umożliwiaja mu precyzyjne zadawanie krytycznych ciosów.\n/b" +
@@ -84,9 +84,25 @@ public final class Player extends Entity {
         // ===== Przypisanie =====
         p.character = c;
         p.skillManager = new SkillLevelManager();
-        p.health = 100;
-        p.protection = 10;
-        p.baseDamage = 5;
+        p.maxHealth = switch (c.heroClass) {
+            case CharacterCreator.Class.Knight -> 100;
+            case CharacterCreator.Class.Archer -> 80;
+            case CharacterCreator.Class.Mage -> 100;
+            default -> 100;
+        };
+        p.health = p.maxHealth;
+        p.protection = switch (c.heroClass) {
+            case CharacterCreator.Class.Knight -> 10;
+            case CharacterCreator.Class.Archer -> 3;
+            case CharacterCreator.Class.Mage -> 3;
+            default -> 100;
+        };
+        p.baseDamage = switch (c.heroClass) {
+            case CharacterCreator.Class.Knight -> 10;
+            case CharacterCreator.Class.Archer -> 15;
+            case CharacterCreator.Class.Mage -> 10;
+            default -> 100;
+        };
 
         switch (input) {
             case "l" -> {
