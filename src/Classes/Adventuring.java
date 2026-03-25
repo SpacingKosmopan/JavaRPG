@@ -9,11 +9,10 @@ import java.util.Scanner;
 public class Adventuring {
     private final java.util.Random random = new java.util.Random();
     private int dungeonDepth = 1;
+    private int searchesLeft = 2;
 
     public void Adventure(Scanner sc, Player player) {
-
         dungeonDepth = 1;
-
         System.out.println(ConsoleFormatter.deregex("\n/yWchodzisz do lochu.../0"));
 
         while (player.getHealth() > 0) {
@@ -35,12 +34,12 @@ public class Adventuring {
 
     public boolean GenerateDungeonRoom(Player player, Scanner sc) {
 
-        System.out.println("""
-                1. Idź głębiej (wysokie ryzyko, lepsze nagrody)
-                2. Przeszukaj pomieszczenie (tylko dwa razy na poziom, nagroda lub kara)
-                3. Odpocznij (leczenie, możliwa zasadzka)
-                4. Ucieknij z lochu
-                """);
+        System.out.println("1. Idź głębiej (wysokie ryzyko, lepsze nagrody)" +
+                "\n2. Przeszukaj pomieszczenie (pozostało: " +
+                searchesLeft +
+                "\n, nagroda lub kara)" +
+                "\n3. Odpocznij (leczenie, możliwa zasadzka)" +
+                "\n4. Ucieknij z lochu)");
 
         String input = sc.nextLine();
 
@@ -48,7 +47,7 @@ public class Adventuring {
 
             // ===== IŚCIE GŁĘBIEJ =====
             case "1" -> {
-
+                searchesLeft = 2;
                 int roll = random.nextInt(100);
 
                 if (roll < 65) { // 65% wróg
@@ -74,7 +73,11 @@ public class Adventuring {
 
             // ===== PRZESZUKIWANIE =====
             case "2" -> {
-
+                if (searchesLeft <= 0) {
+                    System.out.println("Nie możesz już przeszukać tego poziomu.");
+                    break;
+                }
+                searchesLeft--;
                 int roll = random.nextInt(100);
 
                 if (roll < 50) {
@@ -146,7 +149,6 @@ public class Adventuring {
     public void StartFight(Player player, Enemy enemy, Scanner sc) {
 
         int potionsLeft = 2;
-        Random random = new Random();
 
         System.out.println(ConsoleFormatter.deregex("/rRozpoczyna się walka!/0"));
 
@@ -177,10 +179,12 @@ public class Adventuring {
                 }
                 case "2" -> {
                     defending = true;
+                    int heal = (int) (player.maxHealth * 0.1);
+                    player.Heal(heal);
                     System.out.println("Przygotowujesz się na atak.");
                 }
                 case "3" -> {
-                    int base = (int) (player.getBaseDamage() * 2);
+                    int base = (int) (player.getBaseDamage() * 3);
                     int dmg = CalculateDamageAfterProtection(base, enemy.getProtection());
                     enemy.DealDamage(dmg);
 
